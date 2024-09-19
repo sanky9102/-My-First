@@ -1,0 +1,22 @@
+sudo useradd --no-create-home --shell /bin/false prometheus
+  247  sudo useradd --no-create-home --shell /bin/false node_exporter
+  248  sudo mkdir /etc/prometheus
+  249  sudo mkdir /var/lib/prometheus
+  250  sudo chown prometheus:prometheus /etc/prometheus
+  251  sudo chown prometheus:prometheus /var/lib/prometheus
+  252  cd ~
+  253  curl -LO https://github.com/prometheus/prometheus/releases/download/v2.0.0/prometheus-2.0.0.linux-amd64.tar.gz
+  254  sha256sum prometheus-2.0.0.linux-amd64.tar.gz
+  255  tar xvf prometheus-2.0.0.linux-amd64.tar.gz
+  256  sudo cp prometheus-2.0.0.linux-amd64/prometheus /usr/local/bin/
+  257  sudo cp prometheus-2.0.0.linux-amd64/promtool /usr/local/bin/
+  258  sudo chown prometheus:prometheus /usr/local/bin/prometheus
+  259  sudo chown prometheus:prometheus /usr/local/bin/promtool
+  260  sudo cp -r prometheus-2.0.0.linux-amd64/consoles /etc/prometheus
+  261  sudo cp -r prometheus-2.0.0.linux-amd64/console_libraries /etc/prometheus
+  262  sudo chown -R prometheus:prometheus /etc/prometheus/consoles
+  263  sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
+  264  rm -rf prometheus-2.0.0.linux-amd64.tar.gz prometheus-2.0.0.linux-amd64
+  265  sudo nano /etc/prometheus/prometheus.yml
+  266  sudo chown prometheus:prometheus /etc/prometheus/prometheus.yml
+  267  sudo -u prometheus /usr/local/bin/prometheus     --config.file /etc/prometheus/prometheus.yml     --storage.tsdb.path /var/lib/prometheus/     --web.console.templates=/etc/prometheus/consoles     --web.console.
