@@ -1,0 +1,49 @@
+### Steps to Map Google Drive to OwnCloud
+
+1. **Pull the OwnCloud Docker Image**
+   
+   docker pull owncloud
+   
+
+2. **Run the Docker Container and Expose the Port**
+   
+   sudo docker run -d -p 8081:80 owncloud
+   
+
+3. **Check OwnCloud in the Browser**
+   - Open your browser and go to `http://localhost:8081` to verify that OwnCloud is up and running.
+
+4. **Login to OwnCloud**
+   - **Username:** `admin`
+   - **Password:** `admin`
+
+5. **Access Storage Settings in OwnCloud**
+   - Go to the settings page.
+   - Navigate to the "Storage" section.
+   - Create a new folder, then select "Google Drive" as the storage service.
+
+6. **Enable Google Drive API in Google Cloud Console**
+   - Go to [Google Cloud Console](https://console.cloud.google.com/).
+   - Navigate to the "Dashboard".
+   - Go to the "API Overview" section and search for "Google Drive API".
+   - Select "Google Drive API" and enable it.
+   - Create credentials by selecting **Web Browser** and **User Data**.
+
+7. **Set Up OAuth 2.0 Credentials**
+   - Fill in the required fields.
+   - In the **Authorized Redirect URIs** section, add the following URIs:
+     - `http://localhost:8081/index.php/settings/admin?sectionid=storage`
+     - `http://localhost:8081/index.php/settings/personal?sectionid=storage`
+
+8. **Publish OAuth Consent Screen**
+   - Go to the "OAuth Consent Screen".
+   - Change the "Publishing Status" to "In Production".
+
+9. **Copy the Client ID and Client Secret**
+   - After setting up the OAuth consent screen, copy the **Client ID** and **Client Secret**.
+
+10. **Grant Access in OwnCloud**
+    - Return to OwnCloud, paste the **Client ID** and **Client Secret** into the appropriate fields in the Google Drive storage setup.
+    - Click on "Grant Access" to complete the configuration.
+
+Your Google Drive should now be successfully mapped to OwnCloud and ready for use.
